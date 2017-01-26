@@ -8,6 +8,9 @@
 
 import Foundation
 
+// store variable name and value pair in a dictionary
+var variables = Dictionary<String, Double>()
+
 struct CalculatorBrain {
     
     // the calculated value
@@ -18,11 +21,28 @@ struct CalculatorBrain {
     
     private var pendingBinaryOperation: PendingBinaryOperation?
     
+    // an array stores operator and operand
+    private var expressionElementArray = Array<ExpressionElement>()
+
+    
+    
     // four types of operations that the user could type
     private enum Operation {
         case constant(Double)
+        case variable(Double)
         case unaryOperation((Double) -> Double)
         case binaryOperation((Double, Double) -> Double, (String, String) -> String)
+        case equals
+    }
+    
+    
+    
+    private enum ExpressionElement {
+        case number(Double)
+        case constant(String, Double)
+        case variable(String)
+        case unaryOperation(String, (Double) -> Double)
+        case binaryOperation(String, (Double, Double) -> Double, (String, String) -> String)
         case equals
     }
     
@@ -48,11 +68,13 @@ struct CalculatorBrain {
             case .constant(let value):
                 accumulator = value
                 description = symbol
+                expressionElementArray.append(ExpressionElement.constant(symbol, value))
             case .unaryOperation(let function):
                 if accumulator != nil && description != nil {
                     accumulator = function(accumulator!)
                     description = symbol + "(" + description! + ")"
                 }
+                expressionElementArray.append(ExpressionElement.unaryOperation(symbol, function))
             case .binaryOperation(let function, let descriptionFunction):
                 performPendingBinaryOperation()
                 if accumulator != nil && description != nil {
@@ -60,8 +82,10 @@ struct CalculatorBrain {
                     accumulator = nil
                     description! += symbol
                 }
+                expressionElementArray.append(ExpressionElement.binaryOperation(symbol, function, descriptionFunction))
             case .equals:
                 performPendingBinaryOperation()
+                expressionElementArray.append(ExpressionElement.equals)
             }
         }
     }
@@ -88,9 +112,84 @@ struct CalculatorBrain {
         }
     }
     
+    /* 
+     * set number operand
+     */
     mutating func setOperand(_ operand: Double) {
         accumulator = operand
         description = String(operand)
+        // store input number to the expression array
+        expressionElementArray.append(ExpressionElement.number(operand))
+    }
+    
+    private var variableName: String?
+    private var variableIsAssignedValue = false
+    
+    /*
+     * set variable operand
+     */
+    mutating func setOperand(variable named: String) {
+        // add (variableName, 0) to the dictionary
+        variables[named] = 0
+        // store input variable to the expression array
+        expressionElementArray.append(ExpressionElement.variable(named))
+    }
+    
+    
+    func evaluate(using variables: Dictionary<String, Double>? = nil)
+        -> (result: Double?, description: String) {
+            
+            func evaluateExpression(_ expression: Array<ExpressionElement>) -> (result: Double?, description: String, restExpression: Array<ExpressionElement>) {
+                var restExpression = expression
+                if restExpression.isEmpty == false {
+                    let lastElement = restExpression.removeLast()
+                    switch lastElement {
+                    case .number(let value):
+                        return (value, "\(value)", restExpression)
+                    case .constant(let name, let value):
+                        return (value, name, restExpression)
+                    case .variable(let name):
+                        if variables != nil {
+                            if let value = variables![name] {
+                                return (value, name, restExpression)
+                            } else {
+                                return (0, name, restExpression)
+                            }
+                        }
+                    case .unaryOperation(let operatorName, let function):
+                        let currentState = evaluateExpression(restExpression)
+                        let result: Double?
+                        let description: String
+                        if let currentResult = currentState.result {
+                            result = function(currentResult)
+                        }
+                        description = operatorName + "(" + currentState.description + ")"
+                        return (result, description, currentState.restExpression)
+                    case .binaryOperation(let operatorName, let function, let descriptionFunction):
+                        
+                    case .equals:
+                        // compute all the previous result
+                        while restExpression.isEmpty == false {
+                            
+                            
+                        }
+                    }
+                    
+                    
+                }
+            }
+            
+            var currentState: (results: Double?, description: String, restExpression: Array<ExpressionElement>)
+            currentState.restExpression = expressionElementArray
+            
+            while currentState.restExpression.isEmpty == false {
+                // TODO
+                currentState = evaluateExpression(currentState.restExpression)
+            }
+        
+            return (currentState.results, currentState.description)
+            
+            
     }
     
     // interface to the controller to get the computed result
