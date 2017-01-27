@@ -16,7 +16,7 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="RM2-Xn-x2g">
@@ -110,7 +110,7 @@
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                         <state key="normal" title="←"/>
                                                                         <connections>
-                                                                            <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ASI-oH-VMN"/>
+                                                                            <action selector="undo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Euf-5a-jOo"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>

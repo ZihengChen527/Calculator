@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var variableDisplay: UILabel!
     var userIsInTheMiddleOfTyping = false
     let variableName = "M"
+    var currentState: (result: Double?, description: String) = (nil, " ")
     
     // gets the digit number pressed from the sender's title
     @IBAction func touchDigit(_ sender: UIButton) {
@@ -50,23 +51,23 @@ class ViewController: UIViewController {
     
     // operation buttons
     @IBAction func performOperation(_ sender: UIButton) {
-        var currentState: (result: Double?, description: String) = (nil, " ")
+        if sender.currentTitle == variableName {
+            currentState = brain.setOperand(variable: variableName)
+        }
+        if sender.currentTitle == "→\(variableName)" {
+            if variables[variableName] != nil {
+                variables[variableName] = displayValue
+                variableDisplay.text = "\(variableName)=\(displayValue)"
+                currentState = brain.evaluate(using: variables)
+            }
+            userIsInTheMiddleOfTyping = false
+        }
         if userIsInTheMiddleOfTyping {
             currentState = brain.setOperand(displayValue)
             userIsInTheMiddleOfTyping = false
         }
         if let mathematicalSymbol = sender.currentTitle {
             currentState = brain.performOperation(mathematicalSymbol)
-            if mathematicalSymbol == variableName {
-                currentState = brain.setOperand(variable: variableName)
-            }
-            if mathematicalSymbol == "→\(variableName)" {
-                if variables[variableName] != nil {
-                    variables[variableName] = displayValue
-                }
-                variableDisplay.text = "\(variableName)=\(displayValue)"
-                currentState = brain.evaluate(using: variables)
-            }
         }
         if let result = currentState.result {
             displayValue = result
@@ -82,7 +83,35 @@ class ViewController: UIViewController {
         } else {
             mathSequenceDisplay.text = " "
         }
-        
+    }
+    
+    // undo button
+    @IBAction func undo(_ sender: UIButton) {
+        if userIsInTheMiddleOfTyping {
+            if display.text?.characters.count == 1 {
+                display.text = "0"
+                userIsInTheMiddleOfTyping = false
+            } else {
+                display.text?.characters.removeLast()
+            }
+        } else {
+            currentState = brain.undo()
+            if let result = currentState.result {
+                displayValue = result
+            }
+            
+            // TODO:
+            if currentState.description != " " {
+                if brain.resultIsPending {
+                    mathSequenceDisplay.text = currentState.description + "..."
+                } else {
+                    mathSequenceDisplay.text = currentState.description + "="
+                }
+            } else {
+                mathSequenceDisplay.text = " "
+            }
+
+        }
     }
     
     // UIButton that clears everything of the calculator
