@@ -48,32 +48,36 @@ class ViewController: UIViewController {
     private var brain = CalculatorBrain()
     
     @IBAction func performOperation(_ sender: UIButton) {
+        var currentState: (result: Double?, description: String) = (nil, " ")
         if userIsInTheMiddleOfTyping {
-            brain.setOperand(displayValue)
+            currentState = brain.setOperand(displayValue)
             userIsInTheMiddleOfTyping = false
         }
         if let mathematicalSymbol = sender.currentTitle {
-            brain.performOperation(mathematicalSymbol)
+            currentState = brain.performOperation(mathematicalSymbol)
         }
-        if let result = brain.result {
+        if let result = currentState.result {
             displayValue = result
         }
-        if let mathSequence = brain.mathSequence {
+        
+        // TODO:
+        if currentState.description != " " {
             if brain.resultIsPending {
-                mathSequenceDisplay.text = mathSequence + "..."
+                mathSequenceDisplay.text = currentState.description + "..."
             } else {
-                mathSequenceDisplay.text = mathSequence + "="
+                mathSequenceDisplay.text = currentState.description + "="
             }
         } else {
-            mathSequenceDisplay.text = "0"
+            mathSequenceDisplay.text = " "
         }
+        
     }
     
     // UIButton that clears everything of the calculator
     @IBAction func clearCalculator(_ sender: UIButton) {
         brain.clear()
         display.text = "0"
-        mathSequenceDisplay.text = "0"
+        mathSequenceDisplay.text = " "
         userIsInTheMiddleOfTyping = false
     }
 }
