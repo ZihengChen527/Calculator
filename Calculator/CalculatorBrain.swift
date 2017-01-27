@@ -213,13 +213,13 @@ struct CalculatorBrain {
     // return true if the result is pending
     var resultIsPending: Bool {
         get {
-            return pendingBinaryOperation != nil
+            return evaluate(using: variables).result == nil
+            //return pendingBinaryOperation != nil
         }
     }
     
     // clears everything of the calculator
     mutating func clear() {
-        // TODO: empty the array
         expressionElementArray.removeAll()
         accumulator = nil
         description = nil

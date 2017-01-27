@@ -10,10 +10,11 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var display: UILabel!      // calculator result display
+    @IBOutlet weak var display: UILabel!
     @IBOutlet weak var mathSequenceDisplay: UILabel!
- 
+    @IBOutlet weak var variableDisplay: UILabel!
     var userIsInTheMiddleOfTyping = false
+    let variableName = "M"
     
     // gets the digit number pressed from the sender's title
     @IBAction func touchDigit(_ sender: UIButton) {
@@ -47,6 +48,7 @@ class ViewController: UIViewController {
     
     private var brain = CalculatorBrain()
     
+    // operation buttons
     @IBAction func performOperation(_ sender: UIButton) {
         var currentState: (result: Double?, description: String) = (nil, " ")
         if userIsInTheMiddleOfTyping {
@@ -55,6 +57,16 @@ class ViewController: UIViewController {
         }
         if let mathematicalSymbol = sender.currentTitle {
             currentState = brain.performOperation(mathematicalSymbol)
+            if mathematicalSymbol == variableName {
+                currentState = brain.setOperand(variable: variableName)
+            }
+            if mathematicalSymbol == "→\(variableName)" {
+                if variables[variableName] != nil {
+                    variables[variableName] = displayValue
+                }
+                variableDisplay.text = "\(variableName)=\(displayValue)"
+                currentState = brain.evaluate(using: variables)
+            }
         }
         if let result = currentState.result {
             displayValue = result
@@ -78,6 +90,7 @@ class ViewController: UIViewController {
         brain.clear()
         display.text = "0"
         mathSequenceDisplay.text = " "
+        variableDisplay.text = " "
         userIsInTheMiddleOfTyping = false
     }
 }
