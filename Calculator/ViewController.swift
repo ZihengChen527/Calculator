@@ -69,20 +69,7 @@ class ViewController: UIViewController {
         if let mathematicalSymbol = sender.currentTitle {
             currentState = brain.performOperation(mathematicalSymbol)
         }
-        if let result = currentState.result {
-            displayValue = result
-        }
-        
-        // TODO:
-        if currentState.description != " " {
-            if brain.resultIsPending {
-                mathSequenceDisplay.text = currentState.description + "..."
-            } else {
-                mathSequenceDisplay.text = currentState.description + "="
-            }
-        } else {
-            mathSequenceDisplay.text = " "
-        }
+        displayResultDescription()
     }
     
     // undo button
@@ -96,21 +83,7 @@ class ViewController: UIViewController {
             }
         } else {
             currentState = brain.undo()
-            if let result = currentState.result {
-                displayValue = result
-            }
-            
-            // TODO:
-            if currentState.description != " " {
-                if brain.resultIsPending {
-                    mathSequenceDisplay.text = currentState.description + "..."
-                } else {
-                    mathSequenceDisplay.text = currentState.description + "="
-                }
-            } else {
-                mathSequenceDisplay.text = " "
-            }
-
+            displayResultDescription()
         }
     }
     
@@ -122,6 +95,18 @@ class ViewController: UIViewController {
         variableDisplay.text = " "
         userIsInTheMiddleOfTyping = false
     }
+    
+    private func displayResultDescription() {
+        if let result = currentState.result {
+            displayValue = result
+        }
+        
+        if currentState.result == nil  {
+                mathSequenceDisplay.text = currentState.description + "..."
+            } else {
+                mathSequenceDisplay.text = currentState.description + "="
+            }
+        }
 }
 
 

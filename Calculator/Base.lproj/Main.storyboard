@@ -318,7 +318,7 @@
                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MM9-hB-B56">
                                                                                 <color key="backgroundColor" red="0.92549019610000005" green="0.92552381750000001" blue="0.92537313700000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                                                <state key="normal" title="0">
+                                                                                <state key="normal" title=".">
                                                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 </state>
                                                                                 <connections>
@@ -330,7 +330,7 @@
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="08t-Fy-h8c">
                                                                         <color key="backgroundColor" red="0.92549019610000005" green="0.92552381750000001" blue="0.92537313700000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                                        <state key="normal" title=".">
+                                                                        <state key="normal" title="0">
                                                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         </state>
                                                                         <connections>
@@ -372,7 +372,7 @@
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="RM2-Xn-x2g" secondAttribute="bottom" constant="8" symbolic="YES" id="4Id-qq-dC3"/>
                             <constraint firstAttribute="leadingMargin" secondItem="RM2-Xn-x2g" secondAttribute="leading" id="642-Yk-99Y"/>
-                            <constraint firstItem="RM2-Xn-x2g" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="OUN-9a-VoA"/>
+                            <constraint firstItem="RM2-Xn-x2g" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="OUN-9a-VoA"/>
                             <constraint firstAttribute="leadingMargin" secondItem="RM2-Xn-x2g" secondAttribute="leading" id="XdH-vs-wq0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="RM2-Xn-x2g" secondAttribute="trailing" id="XnQ-z8-eSm"/>
                             <constraint firstItem="RM2-Xn-x2g" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="pBP-HX-yh8"/>
@@ -386,7 +386,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-28" y="212"/>
+            <point key="canvasLocation" x="-68" y="124"/>
         </scene>
     </scenes>
 </document>
