@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 // store variable name and value pair in a dictionary
 var variables = Dictionary<String, Double>()
 
@@ -155,5 +154,6 @@ struct CalculatorBrain {
     // clears everything of the calculator
     mutating func clear() {
         expressionElementArray.removeAll()
+        variables.removeAll()
     }
 }
