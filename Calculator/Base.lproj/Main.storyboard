@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8bH-4m-Q1n">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -7,16 +7,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Calculator-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Calculator" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="CalculatorViewController" customModule="Calculator" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="RM2-Xn-x2g">
@@ -82,19 +82,29 @@
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3eb-5F-02E">
                                                                         <color key="backgroundColor" red="0.95686274510000002" green="0.30526676860000002" blue="0.94758241080000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                        <color key="tintColor" red="0.0" green="0.62781808039999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <state key="normal" title="C">
-                                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         </state>
                                                                         <connections>
                                                                             <action selector="clearCalculator:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FEk-13-dNy"/>
                                                                         </connections>
                                                                     </button>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WWV-op-4E0">
+                                                                        <color key="backgroundColor" red="0.91719979047775269" green="0.83982628583908081" blue="0.046219408512115479" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                        <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <state key="normal" title="G"/>
+                                                                        <connections>
+                                                                            <segue destination="hjE-nV-qIL" kind="showDetail" identifier="show graph" id="LQY-EU-lVq"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8zd-ah-naQ">
                                                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                         <state key="normal" title="M"/>
                                                                         <connections>
-                                                                            <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="V1w-fB-8xP"/>
+                                                                            <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="alQ-vr-C0f"/>
                                                                         </connections>
                                                                     </button>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qcl-My-0XA">
@@ -378,15 +388,113 @@
                             <constraint firstItem="RM2-Xn-x2g" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="pBP-HX-yh8"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Calculator" id="QNZ-DM-3Xv"/>
                     <connections>
                         <outlet property="display" destination="HiP-o1-lte" id="kpu-fE-f6y"/>
                         <outlet property="mathSequenceDisplay" destination="2U8-Ep-EcJ" id="XNq-Ls-D4O"/>
+                        <outlet property="showGraph" destination="WWV-op-4E0" id="Q54-j3-5kp"/>
                         <outlet property="variableDisplay" destination="nXe-rJ-Z2j" id="xjd-yd-0Pr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-68" y="124"/>
+            <point key="canvasLocation" x="932" y="-268"/>
+        </scene>
+        <!--Split View Controller-->
+        <scene sceneID="BfU-GF-W61">
+            <objects>
+                <splitViewController id="8bH-4m-Q1n" sceneMemberID="viewController">
+                    <connections>
+                        <segue destination="dEo-Pt-Txg" kind="relationship" relationship="masterViewController" id="FCx-0S-ikK"/>
+                        <segue destination="hjE-nV-qIL" kind="relationship" relationship="detailViewController" id="s4W-f6-Yei"/>
+                    </connections>
+                </splitViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zvl-UX-oyL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1069" y="182"/>
+        </scene>
+        <!--Graph View Controller-->
+        <scene sceneID="hfH-yz-TcW">
+            <objects>
+                <viewController id="z9l-5r-qub" customClass="GraphViewController" customModule="Calculator" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sbc-Wn-Kjf"/>
+                        <viewControllerLayoutGuide type="bottom" id="Grx-BI-j0P"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hbC-eS-RtO">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="U1d-B5-hqQ" customClass="GraphView" customModule="Calculator" customModuleProvider="target">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="pointsPerUnit">
+                                        <real key="value" value="50"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                        <color key="value" red="0.13998821377754211" green="0.94156599044799805" blue="0.034681480377912521" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="U1d-B5-hqQ" firstAttribute="leading" secondItem="hbC-eS-RtO" secondAttribute="leading" id="W9O-V3-LDM"/>
+                            <constraint firstItem="U1d-B5-hqQ" firstAttribute="top" secondItem="hbC-eS-RtO" secondAttribute="top" id="gSh-3k-QNv"/>
+                            <constraint firstAttribute="trailing" secondItem="U1d-B5-hqQ" secondAttribute="trailing" id="gis-aJ-9C7"/>
+                            <constraint firstItem="U1d-B5-hqQ" firstAttribute="bottom" secondItem="Grx-BI-j0P" secondAttribute="top" id="k7q-V8-gr6"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="wIa-pX-fPF"/>
+                    <connections>
+                        <outlet property="graphView" destination="U1d-B5-hqQ" id="pnl-jo-ont"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="B4l-rP-eyS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="932" y="668"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="RM8-nS-gsW">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dEo-Pt-Txg" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="zMC-lC-zgQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="uRM-Kk-x31"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AFk-Bj-XZ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-7" y="-268"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="rue-dq-W2A">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hjE-nV-qIL" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="WDJ-qt-EPV">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="z9l-5r-qub" kind="relationship" relationship="rootViewController" id="j2M-ie-dPl"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Otq-zV-fH2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-7" y="668"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="LQY-EU-lVq"/>
+    </inferredMetricsTieBreakers>
 </document>

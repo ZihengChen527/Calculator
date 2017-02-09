@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class CalculatorViewController: UIViewController {
     
     @IBOutlet weak var display: UILabel!
     @IBOutlet weak var mathSequenceDisplay: UILabel!
@@ -102,9 +102,48 @@ class ViewController: UIViewController {
         }
         
         if currentState.result == nil  {
-                mathSequenceDisplay.text = currentState.description + "..."
-            } else {
-                mathSequenceDisplay.text = currentState.description + "="
+            mathSequenceDisplay.text = currentState.description + "..."
+            showGraph.setTitleColor(UIColor.lightGray, for: UIControlState.normal)   // show gray on graphing button when graphing is disabled
+        } else {
+            mathSequenceDisplay.text = currentState.description + "="
+            showGraph.setTitleColor(UIColor.blue, for: UIControlState.normal)  // show blue on graphing button when graphing is abled
+        }
+    }
+    
+    @IBOutlet weak var showGraph: UIButton!
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let identifier = segue.identifier {
+            switch identifier {
+            case "show graph":
+                var destinationController = segue.destination
+                if let navigationController = destinationController as? UINavigationController {
+                    destinationController = navigationController.visibleViewController ?? destinationController
+                }
+                if let graphViewController = destinationController as? GraphViewController {
+                    // set the x vs y function in graphView
+                    if (variables[self.variableName] != nil) {  // graph the x vs y function only when 'M' is in the formula
+                        graphViewController.function = { [unowned self] (independentVariable: Double) -> Double in
+                            variables[self.variableName] = independentVariable
+                            return self.brain.evaluate(using: variables).result!
+                        }
+                    } else {
+                        graphViewController.function = nil
+                    }
+                    // set the title of the graph view showing the function being drawn
+                    graphViewController.navigationItem.title = currentState.description
+                }
+            default:
+                break
             }
         }
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String?, sender: Any?) -> Bool {
+        // if result is pending, then disable segue
+        if identifier == "show graph" && currentState.result == nil {
+            return false
+        }
+        return true
+    }
 }
