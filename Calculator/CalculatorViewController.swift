@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CalculatorViewController: UIViewController {
+class CalculatorViewController: UIViewController, UISplitViewControllerDelegate {
     
     @IBOutlet weak var display: UILabel!
     @IBOutlet weak var mathSequenceDisplay: UILabel!
@@ -112,6 +112,11 @@ class CalculatorViewController: UIViewController {
     
     @IBOutlet weak var showGraph: UIButton!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.splitViewController?.delegate = self
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier {
             switch identifier {
@@ -145,5 +150,24 @@ class CalculatorViewController: UIViewController {
             return false
         }
         return true
+    }
+    
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
+        if primaryViewController.contents == self {
+            if let graphViewController = secondaryViewController.contents as? GraphViewController, graphViewController.graphView == nil {
+                return true
+            }
+        }
+        return false
+    }
+}
+
+extension UIViewController {
+    var contents: UIViewController {
+        if let navcon = self as? UINavigationController {
+            return navcon.visibleViewController ?? self
+        } else {
+            return self
+        }
     }
 }
